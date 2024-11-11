@@ -1,40 +1,43 @@
 .nav {
     background-color: #e4002b;
-    padding: 20px;
+    padding: 10px 20px;
     margin: 0 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.nav .navLinks {
     display: flex;
     flex-direction: row;
 }
 
-.nav a img {
+.nav .navLinks a img {
     height: 50px;
     width: 50px;
     margin-right: 20px;
 }
 
-.nav ul {
+.nav .navLinks ul {
     list-style-type: none;
     padding: 0;
 }
 
-.nav ul li {
+.nav .navLinks ul li {
     display: inline;
     margin: auto 20px 10px;
 }
 
-.nav ul li a,
+.nav .navLinks ul li a,
 .nav p {
     text-decoration: none;
     font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 18px;
     color: #FFF;
 }
 
-.nav ul li a:hover {
+.nav .navLinks ul li a:hover {
     text-decoration: underline;
-}
-
-.nav p {
-    margin: auto 20px;
 }

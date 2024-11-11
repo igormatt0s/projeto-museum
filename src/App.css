@@ -9,10 +9,10 @@
   flex: 1;
 }
 
-main {
+.routes {
   flex: 3;
 }
 
-aside {
+.aside {
   flex: 1;
 }
