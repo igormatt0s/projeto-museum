@@ -1,4 +1,4 @@
-.main {
+.art {
     text-align: center;
     background-color: #fff;
     min-height: 50vh;
@@ -10,12 +10,12 @@
     color: #333333;
 }
 
-.main h1 {
+.art h1 {
     font-family: Georgia,Times New Roman,Times,serif;
     font-weight: 800;
 }
 
-.main p {
+.art p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 20px;
 }

@@ -3,7 +3,7 @@ import './Art.css'
 
 const Art = () => {
   return (
-    <main className="main">
+    <main className="art">
       <h1>Art Page</h1>
       <p>Explore obras de arte aqui.</p>
     </main>

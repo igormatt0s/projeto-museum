@@ -7,25 +7,27 @@ import Aside from './components/Aside/Aside'
 import Footer from './components/Footer/Footer'
 import About from './pages/About/About'
 import Art from './pages/Art/Art'
+import GalleryProvider from './context/GalleryContext'
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <div className="content">
-          <div className="routes">
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/art" element={<Art />} />
-            </Routes>
+    <GalleryProvider>
+      <Router>
+        <div className="App">
+          <Header />
+          <div className="content">
+            <div className="routes">
+              <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/art" element={<Art />} />
+              </Routes>
+            </div>
           </div>
-          {/*<Aside className="aside" />*/}
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </GalleryProvider>
   );
 }
 

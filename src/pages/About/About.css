@@ -1,4 +1,4 @@
-.main {
+.about {
     text-align: center;
     background-color: #fff;
     min-height: 50vh;
@@ -66,14 +66,14 @@
     margin: 20px 0;
 }
 
-.main section h2,
-.main section h3 {
+.about section h2,
+.about section h3 {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 500;
     text-align: justify;
 }
 
-.main p {
+.about p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 20px;
     text-align: justify;
@@ -87,4 +87,5 @@
 
 .rowImages img {
     width: 49%;
+    margin-bottom: 40px;
 }
