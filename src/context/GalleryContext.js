@@ -6,6 +6,7 @@ export const GalleryContext = createContext();
 const actionTypes = {
   SET_ARTWORKS: 'SET_ARTWORKS',
   SET_SEARCH_TERM: 'SET_SEARCH_TERM',
+  SET_LATEST_ARTWORKS: 'SET_LATEST_ARTWORKS',
 };
 
 // Função reducer para gerenciar o estado da galeria
@@ -15,6 +16,8 @@ const galleryReducer = (state, action) => {
       return { ...state, artworks: action.payload };
     case actionTypes.SET_SEARCH_TERM:
       return { ...state, searchTerm: action.payload };
+    case actionTypes.SET_LATEST_ARTWORKS:
+      return { ...state, latestArtworks: action.payload };
     default:
       return state;
   }
@@ -24,12 +27,13 @@ const galleryReducer = (state, action) => {
 const initialState = {
   artworks: [],
   searchTerm: '',
+  latestArtworks: [],
 };
 
 const GalleryProvider = ({ children }) => {
   const [state, dispatch] = useReducer(galleryReducer, initialState);
 
-  // Função para buscar dados da API
+  // Função para buscar dados da API para a busca
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
@@ -56,6 +60,33 @@ const GalleryProvider = ({ children }) => {
     }
   }, [state.searchTerm]);
 
+  // Função para buscar as últimas 20 obras de arte
+  useEffect(() => {
+    const fetchLatestArtworks = async () => {
+      try {
+        // Aqui pegamos um número maior de objetos e ordenamos pela objectID
+        const response = await fetch(
+            'https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=*'
+        );          
+        const data = await response.json();
+        // Pegamos os 20 maiores objectIDs, assumindo que maiores são mais recentes
+        const artData = await Promise.all(
+          data.objectIDs.slice(-20).map(async (id) => {
+            const res = await fetch(
+              `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+            );
+            return await res.json();
+          })
+        );
+        dispatch({ type: actionTypes.SET_LATEST_ARTWORKS, payload: artData });
+      } catch (error) {
+        console.error('Erro ao buscar últimas obras:', error);
+      }
+    };
+
+    fetchLatestArtworks();
+  }, []);
+
   // Funções de ação para atualizar o estado
   const setSearchTerm = (term) => {
     dispatch({ type: actionTypes.SET_SEARCH_TERM, payload: term });
@@ -66,6 +97,7 @@ const GalleryProvider = ({ children }) => {
       value={{
         artworks: state.artworks,
         searchTerm: state.searchTerm,
+        latestArtworks: state.latestArtworks,
         setSearchTerm,
       }}
     >

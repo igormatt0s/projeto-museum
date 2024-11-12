@@ -1,23 +1,30 @@
-import React, { useContext, useState } from 'react'
-import { GalleryContext } from '../../context/GalleryContext'
-import './Main.css'
+import React, { useContext } from 'react';
+import { GalleryContext } from '../../context/GalleryContext';
+import { Carousel } from 'react-bootstrap';
+import './Main.css';
 
 const Main = () => {
-  const { artworks } = useContext(GalleryContext)
+  const { latestArtworks } = useContext(GalleryContext);
 
   return (
-    <main className="main">
-      <h1>Galeria de Arte</h1>
-      <div className="gallery">
-        {artworks.map((artwork) => (
-          <div key={artwork.objectID} className="artwork">
-            <img src={artwork.primaryImageSmall} alt={artwork.title} />
-            <h3>{artwork.title}</h3>
-            <p>{artwork.artistDisplayName}</p>
-          </div>
+    <div className="main-container">
+      <h1 className="text-center my-4">Últimas Adições à Coleção</h1>
+      <Carousel>
+        {latestArtworks.map((artwork) => (
+          <Carousel.Item key={artwork.objectID}>
+            <img
+              className="d-block w-100"
+              src={artwork.primaryImageSmall || 'placeholder.jpg'}
+              alt={artwork.title}
+            />
+            <Carousel.Caption>
+              <h3>{artwork.title}</h3>
+              <p>{artwork.artistDisplayName}</p>
+            </Carousel.Caption>
+          </Carousel.Item>
         ))}
-      </div>
-    </main>
+      </Carousel>
+    </div>
   );
 };
 
