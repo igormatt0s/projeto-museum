@@ -7,6 +7,8 @@ const actionTypes = {
   SET_ARTWORKS: 'SET_ARTWORKS',
   SET_SEARCH_TERM: 'SET_SEARCH_TERM',
   SET_LATEST_ARTWORKS: 'SET_LATEST_ARTWORKS',
+  SET_DEPARTMENTS: 'SET_DEPARTMENTS',
+  SET_SELECTED_DEPARTMENT: 'SET_SELECTED_DEPARTMENT',
 };
 
 // Função reducer para gerenciar o estado da galeria
@@ -18,6 +20,10 @@ const galleryReducer = (state, action) => {
       return { ...state, searchTerm: action.payload };
     case actionTypes.SET_LATEST_ARTWORKS:
       return { ...state, latestArtworks: action.payload };
+    case actionTypes.SET_DEPARTMENTS:
+      return { ...state, departments: action.payload };
+    case actionTypes.SET_SELECTED_DEPARTMENT:
+      return { ...state, selectedDepartment: action.payload, artworks: [] };
     default:
       return state;
   }
@@ -28,6 +34,8 @@ const initialState = {
   artworks: [],
   searchTerm: '',
   latestArtworks: [],
+  departments: [],
+  selectedDepartment: null,
 };
 
 const GalleryProvider = ({ children }) => {
@@ -87,9 +95,55 @@ const GalleryProvider = ({ children }) => {
     fetchLatestArtworks();
   }, []);
 
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await fetch(
+          'https://collectionapi.metmuseum.org/public/collection/v1/departments'
+        );
+        const data = await response.json();
+        dispatch({ type: actionTypes.SET_DEPARTMENTS, payload: data.departments });
+      } catch (error) {
+        console.error('Erro ao buscar departamentos:', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
+  // Função para buscar obras de um departamento específico
+  useEffect(() => {
+    const fetchDepartmentArtworks = async () => {
+      if (!state.selectedDepartment) return;
+      try {
+        const response = await fetch(
+          `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${state.selectedDepartment}&hasImages=true`
+        );
+        const data = await response.json();
+        const artData = await Promise.all(
+          data.objectIDs.slice(0, 20).map(async (id) => {
+            const res = await fetch(
+              `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+            );
+            return await res.json();
+          })
+        );
+        dispatch({ type: actionTypes.SET_ARTWORKS, payload: artData });
+      } catch (error) {
+        console.error('Erro ao buscar obras do departamento:', error);
+      }
+    };
+
+    fetchDepartmentArtworks();
+  }, [state.selectedDepartment]);
+
   // Funções de ação para atualizar o estado
   const setSearchTerm = (term) => {
     dispatch({ type: actionTypes.SET_SEARCH_TERM, payload: term });
+  };
+
+  const setSelectedDepartment = (departmentId) => {
+    dispatch({ type: actionTypes.SET_SELECTED_DEPARTMENT, payload: departmentId });
   };
 
   return (
@@ -98,7 +152,10 @@ const GalleryProvider = ({ children }) => {
         artworks: state.artworks,
         searchTerm: state.searchTerm,
         latestArtworks: state.latestArtworks,
+        departments: state.departments,
+        selectedDepartment: state.selectedDepartment,
         setSearchTerm,
+        setSelectedDepartment,
       }}
     >
       {children}

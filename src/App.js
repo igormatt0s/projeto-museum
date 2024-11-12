@@ -23,6 +23,7 @@ function App() {
                 <Route path="/art" element={<Art />} />
               </Routes>
             </div>
+            <Aside />
           </div>
           <Footer />
         </div>
