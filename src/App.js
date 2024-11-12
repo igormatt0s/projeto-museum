@@ -7,6 +7,7 @@ import Aside from './components/Aside/Aside'
 import Footer from './components/Footer/Footer'
 import About from './pages/About/About'
 import Art from './pages/Art/Art'
+import DepartmentGallery from './pages/DepartmentGallery/DepartmentGallery'
 import GalleryProvider from './context/GalleryContext'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<Main />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/art" element={<Art />} />
+                <Route path="/department/:id" element={<DepartmentGallery />} />
               </Routes>
             </div>
             <Aside />

@@ -23,7 +23,11 @@ const galleryReducer = (state, action) => {
     case actionTypes.SET_DEPARTMENTS:
       return { ...state, departments: action.payload };
     case actionTypes.SET_SELECTED_DEPARTMENT:
-      return { ...state, selectedDepartment: action.payload, artworks: [] };
+        return { 
+            ...state, 
+            selectedDepartment: { id: action.payload.id, name: action.payload.name },
+            artworks: [], // Limpa as obras ao mudar de departamento
+          };
     default:
       return state;
   }
@@ -35,7 +39,7 @@ const initialState = {
   searchTerm: '',
   latestArtworks: [],
   departments: [],
-  selectedDepartment: null,
+  selectedDepartment: { id: null, name: '' },
 };
 
 const GalleryProvider = ({ children }) => {
@@ -114,10 +118,10 @@ const GalleryProvider = ({ children }) => {
   // Função para buscar obras de um departamento específico
   useEffect(() => {
     const fetchDepartmentArtworks = async () => {
-      if (!state.selectedDepartment) return;
+      if (!state.selectedDepartment.id) return;
       try {
         const response = await fetch(
-          `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${state.selectedDepartment}&hasImages=true`
+          `https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=${state.selectedDepartment.id}&hasImages=true`
         );
         const data = await response.json();
         const artData = await Promise.all(
@@ -133,17 +137,18 @@ const GalleryProvider = ({ children }) => {
         console.error('Erro ao buscar obras do departamento:', error);
       }
     };
-
+  
     fetchDepartmentArtworks();
   }, [state.selectedDepartment]);
+  
 
   // Funções de ação para atualizar o estado
   const setSearchTerm = (term) => {
     dispatch({ type: actionTypes.SET_SEARCH_TERM, payload: term });
   };
 
-  const setSelectedDepartment = (departmentId) => {
-    dispatch({ type: actionTypes.SET_SELECTED_DEPARTMENT, payload: departmentId });
+  const setSelectedDepartment = (departmentId, departmentName) => {
+    dispatch({ type: actionTypes.SET_SELECTED_DEPARTMENT, payload: { id: departmentId, name: departmentName } });
   };
 
   return (
