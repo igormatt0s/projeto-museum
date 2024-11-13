@@ -59,21 +59,21 @@
     height: auto;
 }
 
-.resume h1 {
+.resume .resumeText h1 {
     font-family: Georgia,Times New Roman,Times,serif;
     font-weight: 800;
     font-size: calc(3rem + 6*(100vw - 375px) / 1065);
     margin: 20px 0;
 }
 
-.about section h2,
-.about section h3 {
+.section h2,
+.section h3 {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 500;
     text-align: justify;
 }
 
-.about p {
+.p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 20px;
     text-align: justify;

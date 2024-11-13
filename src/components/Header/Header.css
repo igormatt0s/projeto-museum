@@ -43,17 +43,24 @@
     align-items: center;
 }
 
-.search-input {
-    padding: 5px 10px;
-    border-radius: 4px 0 0 4px;
-    border: 1px solid #ccc;
+.search-icon {
+    display: flex;
+    align-items: center;
 }
 
-.search-button {
-    padding: 5px 10px;
-    background-color: #555;
+.custom-search-button {
+    background-color: #e4002b;
+    border-color: #e4002b;
     color: white;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
+  }
+  
+  .custom-search-button:hover {
+    background-color: #a6192e;
+    border-color: #a6192e;
+  }
+
+  @media (max-width: 1000px) {
+    .nav-container {
+        margin: 0;
+    }
 }
