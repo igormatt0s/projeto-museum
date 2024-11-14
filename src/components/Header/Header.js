@@ -7,7 +7,7 @@ import { GalleryContext } from '../../context/GalleryContext';
 import './Header.css';
 
 const Header = () => {
-  const { setSearchTerm, error } = useContext(GalleryContext);
+  const { setSearchTerm } = useContext(GalleryContext);
   const [input, setInput] = useState('');
   const [validationError, setValidationError] = useState('');
   const location = useLocation();
@@ -16,49 +16,48 @@ const Header = () => {
 
   const handleSearch = () => {
     if (!input.trim()) {
-      setValidationError('Por favor, insira um termo de busca.');
+      setValidationError('Please, enter a search term.');
       return;
     }
     setValidationError('');
     setSearchTerm(input);
     navigate('/art');
     setShowSearch(false);
+    setInput('');
   };
 
   const clearSearch = () => {
     setInput('');
     setValidationError('');
+    setSearchTerm('');
   };
 
   return (
     <header className="App-header">
       <Navbar expand="lg nav">
-        <Container className="nav-container d-flex justify-content-between align-items-center">
-          <div className="navLinks d-flex align-items-center">
-            <Link to="/">
-              <img src={logo} alt="logo" className="logo" />
-            </Link>
-
-            <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-              <Nav variant="underline" className="d-flex">
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>About The Met</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/art" className={`nav-link ${location.pathname === '/art' ? 'active' : ''}`}>Art</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Navbar.Collapse>
-          </div>
-          <div className="search-icon" onClick={() => setShowSearch(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-            <FaSearch size={20} style={{ color: '#FFF' }} />
-            <span className="ms-2" style={{ color: '#FFF', fontWeight: 'bold' }}>Search</span>
-          </div>
+        <Container className="nav-container">
+          <Link to="/">
+            <img src={logo} alt="logo" className="logo" />
+          </Link>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className="navLinks d-flex">
+            <Nav variant="underline" className="d-flex">
+              <Nav.Item>
+                <Nav.Link as={Link} to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>About The Met</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} to="/art" className={`nav-link ${location.pathname === '/art' ? 'active' : ''}`}>Art</Nav.Link>
+              </Nav.Item>
+            </Nav>
+            <div className="search-icon" onClick={() => setShowSearch(true)}>
+              <FaSearch size={20} style={{ color: '#FFF' }} />
+              <span className="spanText ms-2">Search</span>
+            </div>
+          </Navbar.Collapse>
         </Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
       </Navbar>
 
       <Modal show={showSearch} onHide={() => setShowSearch(false)} centered>
@@ -70,7 +69,7 @@ const Header = () => {
             <Form.Label>Search art</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Buscar obras..."
+              placeholder="Search for Works of Art..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
@@ -78,20 +77,14 @@ const Header = () => {
           {validationError && <Alert variant="warning" className="mt-2">{validationError}</Alert>}
           <div className="d-flex justify-content-between mt-3">
             <Button variant="secondary" onClick={clearSearch}>
-              Limpar
+              Clean
             </Button>
             <Button variant="primary" className="custom-search-button" onClick={handleSearch}>
-              Buscar
+              Search
             </Button>
           </div>
         </Modal.Body>
       </Modal>
-
-      {error && (
-        <Alert variant="danger" className="mt-2">
-          {error}
-        </Alert>
-      )}
     </header>
   );
 };

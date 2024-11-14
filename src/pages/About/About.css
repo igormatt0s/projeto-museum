@@ -1,79 +1,43 @@
 .about {
     text-align: center;
     background-color: #fff;
-    min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: #333333;
+    color: #333;
 }
 
-.resume,
-.info .mission,
-.rowImages {
+.resumeText p,
+.missionText h3,
+.missionText p {
+    padding: 0 3.5rem;
+}
+
+.resumeText h1 {
+    font-family: Georgia, Times New Roman, serif;
+    font-weight: 800;
+    font-size: calc(3rem + 6 * (100vw - 375px) / 1065);
+    margin: 20px 0;
+}
+
+.resume, .info .mission, .rowImages {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0;
-    margin: 0; 
-}
-
-.resume {
-    background-color: #fff7f0;
+    margin: 0;
 }
 
 .info {
-    margin-top: 10px;
-    margin-left: 100px;
-    margin-right: 100px;
-    max-width: min(85vw -(100vw - 100%), 1600px);
+    max-width: 85vw;
+    margin: 0 auto;
 }
 
-.resume .resumeText,
-.info .mission .missionText {
-    margin: 0 60px;
-}
-
-.resume .resumeText {
-    flex: 1;
-}
-
-.info .mission .missionText {
-    flex: 2;
-}
-
-.info .mission {
-    background-color: #f2f2f2;
-    border: 1px solid #e3e3e3;
-}
-
-.imageMet {
-    width: 66%;
-    height: auto;
-}
-
-.imageMission {
-    width: 40%;
-    height: auto;
-}
-
-.resume .resumeText h1 {
-    font-family: Georgia,Times New Roman,Times,serif;
-    font-weight: 800;
-    font-size: calc(3rem + 6*(100vw - 375px) / 1065);
-    margin: 20px 0;
-}
-
-.section h2,
-.section h3 {
+.info h2, .info h3 {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 500;
     text-align: justify;
 }
 
-.p {
+.resumeText p, .info p, .missionText p, .apiText p {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 20px;
     text-align: justify;
@@ -81,11 +45,16 @@
     margin-bottom: 16px;
 }
 
+.imageMet, .imageMission {
+    width: 100%;
+    height: auto;
+}
+
 .apiText {
     margin-top: 60px;
 }
 
-.rowImages img {
-    width: 49%;
-    margin-bottom: 40px;
+.custom-spacing-col {
+    padding: 0;
+    margin: 0;
 }

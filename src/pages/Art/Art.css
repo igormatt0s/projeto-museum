@@ -1,44 +1,54 @@
 .art-container {
-    background-color: #fff;
-    min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    font-size: calc(10px + 2vmin);
-    color: #333333;
-    padding: 0 100px;
+  background-color: #fff;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(10px + 2vmin);
+  color: #333333;
+  padding: 0 100px;
 }
 
-.main h1 {
-    font-family: Georgia,Times New Roman,Times,serif;
-    font-weight: 600;
-    margin: 20px 0;
-  }
+.art-container h1 {
+  font-family: Georgia, Times New Roman, Times, serif;
+  font-weight: 600;
+  margin: 20px 0;
+}
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-  }
-  
-  .artwork {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .artwork img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .artwork h3 {
-    margin: 10px 0 5px;
-  }
-  
-  .artwork p {
-    color: #555;
-  }
-  
+.alert {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  background-color: rgb(253, 200, 200);
+  color: #333;
+  border: 1px solid rgb(161, 161, 161);
+}
+
+.art-container .card-body .card-text {
+  font-size: 14px;
+}
+
+.page-indicator {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.button-navigation {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button-navigation.enabled {
+  background-color: #222;
+}
+
+.button-navigation.enabled:hover {
+  background-color: #111;
+}
+
+.button-navigation.disabled {
+  background-color: #484848;
+  cursor: not-allowed;
+}

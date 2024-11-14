@@ -1,8 +1,31 @@
 .aside {
+    position: relative;
     padding: 20px;
-    background-color: #e4002b;
+    max-height: 90vh;
+    overflow-y: auto;
 }
-  
+
+.aside-container.show {
+    display: block;
+}
+
+.aside-container.hide {
+    display: none;
+}
+
 .aside h2 {
     color: #fff;
+}
+
+.aside .list-group-item {
+    color: #FFF;
+    background-color: transparent;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.aside .list-group-item:hover {
+    background-color: #a6192e;
+    color: #FFF;
 }

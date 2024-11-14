@@ -7,15 +7,50 @@
   min-height: 100vh;
 }
 
+.routes {
+  z-index: 10 !important;
+}
+
 .content-container {
   display: flex;
   flex: 1;
 }
 
-.routes {
-  flex: 3;
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+  max-width: 100%;
 }
 
-.aside {
-  flex: 1;
+.aside-container {
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  background-color: #e4002b;
+  max-width: 250px;
+  transform: translateX(100%);
+}
+
+.aside-container.show {
+  transform: translateX(0);
+}
+
+/* Botão de alternância flutuante */
+.floating-toggle-button {
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  background-color: #e4002b;
+  border: none;
+  color: #FFF;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+}
+
+.floating-toggle-button:hover {
+  background-color: #a6192e;
 }
