@@ -22,3 +22,25 @@
     font-weight: bold;
     font-size: 18px;
 }
+
+.button-navigation {
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.button-navigation.enabled {
+    background-color: #222;
+}
+
+.button-navigation.enabled:hover {
+    background-color: #111;
+}
+
+.button-navigation.disabled {
+    background-color: #484848;
+    cursor: not-allowed;
+}

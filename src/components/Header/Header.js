@@ -40,7 +40,7 @@ const Header = () => {
             <img src={logo} alt="logo" className="logo" />
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" className="navLinks d-flex">
+          <Navbar.Collapse id="basic-navbar-nav" className="navLinks">
             <Nav variant="underline" className="d-flex">
               <Nav.Item>
                 <Nav.Link as={Link} to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Nav.Link>

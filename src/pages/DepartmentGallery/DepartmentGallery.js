@@ -1,20 +1,20 @@
+// pages/DepartmentGallery/DepartmentGallery.js
 import React, { useContext } from 'react';
 import { GalleryContext } from '../../context/GalleryContext';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import useArtworks from '../../hooks/useArtworks';
 import './DepartmentGallery.css';
 
 const DepartmentGallery = () => {
-  const { artworks, selectedDepartment, currentPage, setPage } = useContext(GalleryContext);
-
-  const handleNextPage = () => setPage(currentPage + 1);
-  const handlePrevPage = () => setPage(currentPage > 1 ? currentPage - 1 : 1);
+  const { selectedDepartment, artworks } = useContext(GalleryContext);
+  const { currentPage, currentArtworks, handleNextPage, handlePreviousPage } = useArtworks(artworks);
 
   return (
     <Container className='department-gallery'>
       <h2 className="my-4 text-center">Works of the Department {selectedDepartment.name}</h2>
       <Row>
-        {artworks.map((artwork) => (
+        {currentArtworks.map((artwork) => (
           <Col md={4} lg={3} key={artwork.objectID} className="mb-4">
             <Link to={`/art/${artwork.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <Card>
@@ -28,26 +28,19 @@ const DepartmentGallery = () => {
           </Col>
         ))}
       </Row>
-      <div className="pagination-controls mt-4 text-center">
+      <div className="pagination-controls text-center my-5">
         <Button 
-          onClick={handlePrevPage} 
+          onClick={handlePreviousPage}
+          className={`button-navigation ${currentPage > 1 ? 'enabled' : 'disabled'}`} 
           disabled={currentPage === 1}
-          style={{
-            backgroundColor: currentPage === 1 ? '#484848' : '#222', 
-            color: 'white',
-            cursor: currentPage === 1 ? 'default' : 'pointer',
-          }}
         >
           Previous
         </Button>
         <span className="page-indicator mx-3">Page {currentPage}</span>
         <Button 
           onClick={handleNextPage}
-          style={{
-            backgroundColor: '#222', 
-            color: 'white',
-            cursor: 'pointer',
-          }}
+          className={`button-navigation ${currentPage < Math.ceil(artworks.length / 20) ? 'enabled' : 'disabled'}`}
+              disabled={currentPage === Math.ceil(artworks.length / 20)}
         >
           Next
         </Button>
