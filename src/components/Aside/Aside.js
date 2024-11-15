@@ -4,12 +4,13 @@ import { GalleryContext } from '../../context/GalleryContext';
 import { ListGroup } from 'react-bootstrap';
 import './Aside.css';
 
-const Aside = () => {
+const Aside = ({ toggleAside }) => {
   const { departments, setSelectedDepartment } = useContext(GalleryContext);
   const navigate = useNavigate();
 
   const handleDepartmentClick = (departmentId, departmentName) => {
     setSelectedDepartment(departmentId, departmentName);
+    toggleAside();
     navigate(`/department/${departmentId}`);
   };
 

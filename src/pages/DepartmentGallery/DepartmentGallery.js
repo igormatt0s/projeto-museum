@@ -1,18 +1,24 @@
 // pages/DepartmentGallery/DepartmentGallery.js
 import React, { useContext } from 'react';
 import { GalleryContext } from '../../context/GalleryContext';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useArtworks from '../../hooks/useArtworks';
 import './DepartmentGallery.css';
 
 const DepartmentGallery = () => {
-  const { selectedDepartment, artworks } = useContext(GalleryContext);
+  const { selectedDepartment, artworks, isLoading } = useContext(GalleryContext);
   const { currentPage, currentArtworks, handleNextPage, handlePreviousPage } = useArtworks(artworks);
 
   return (
     <Container className='department-gallery'>
       <h2 className="my-4 text-center">Works of the Department {selectedDepartment.name}</h2>
+      {isLoading ? (
+        <Alert variant="info" className="text-center" style={{backgroundColor: 'rgb(211, 253, 200)'}}>
+          Loading images...
+        </Alert>
+      ) : (
+        <>
       <Row>
         {currentArtworks.map((artwork) => (
           <Col md={4} lg={3} key={artwork.objectID} className="mb-4">
@@ -45,6 +51,8 @@ const DepartmentGallery = () => {
           Next
         </Button>
       </div>
+      </>
+      )}
     </Container>
   );
 };

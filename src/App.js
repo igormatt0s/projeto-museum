@@ -37,7 +37,7 @@ function App() {
             </Container>
 
             <div className={`aside-container ${isAsideVisible ? 'show' : 'hide'}`}>
-              <Aside />
+              <Aside toggleAside={toggleAside} />
             </div>
 
             <Button

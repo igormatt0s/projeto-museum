@@ -1,0 +1,68 @@
+.details-container {
+    background-color: #fff;
+    min-height: 50vh;
+    flex-direction: row;
+    font-size: calc(10px + 2vmin);
+    width: 100%;
+    color: #333333;
+    margin: 50px 0;
+    padding: 0 100px;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.detailsText {
+    width: 40%;
+}
+
+.detailsImage {
+    width: 45%;
+    max-height: 90vh;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.detailsImage img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+h1 {
+    font-family: 'Georgia', 'Times New Roman', Times, serif;
+    font-weight: 600;
+}
+
+h2 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.artist span,
+.abstract span {
+    font-size: 16px;
+}
+
+.artist .artistDisplayName {
+    text-decoration: underline;
+    margin-right: 20px;
+}
+
+.overview span {
+    font-size: 20px;
+    display: block;
+    margin: 5px 0;
+}
+
+.overview {
+    margin: 50px 0;
+}

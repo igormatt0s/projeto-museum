@@ -147,6 +147,7 @@ const GalleryProvider = ({ children }) => {
   // Função para buscar obras de um departamento específico
   useEffect(() => {
     const fetchDepartmentArtworks = async () => {
+      dispatch({ type: actionTypes.SET_LOADING, payload: true });
       if (!state.selectedDepartment.id) return;
       
       try {
@@ -157,6 +158,8 @@ const GalleryProvider = ({ children }) => {
         dispatch({ type: actionTypes.SET_ARTWORKS, payload: objectIDs });
       } catch (error) {
         console.error('Erro ao buscar obras do departamento:', error);
+      } finally {
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
       }
     };
   
