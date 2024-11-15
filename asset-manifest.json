@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/projeto-museum/static/css/main.df2fc090.css",
-    "main.js": "/projeto-museum/static/js/main.e3c699cc.js",
+    "main.js": "/projeto-museum/static/js/main.4e3cae60.js",
     "static/js/453.7ad9fffd.chunk.js": "/projeto-museum/static/js/453.7ad9fffd.chunk.js",
     "static/media/buddha.jpg": "/projeto-museum/static/media/buddha.d61c9e3eff53a5655d96.jpg",
     "static/media/atm_facade.jpg": "/projeto-museum/static/media/atm_facade.1d0971c96decfce64aed.jpg",
@@ -9,11 +9,11 @@
     "static/media/atm_policies.jpg": "/projeto-museum/static/media/atm_policies.dd7ed359957b39ca09c6.jpg",
     "index.html": "/projeto-museum/index.html",
     "main.df2fc090.css.map": "/projeto-museum/static/css/main.df2fc090.css.map",
-    "main.e3c699cc.js.map": "/projeto-museum/static/js/main.e3c699cc.js.map",
+    "main.4e3cae60.js.map": "/projeto-museum/static/js/main.4e3cae60.js.map",
     "453.7ad9fffd.chunk.js.map": "/projeto-museum/static/js/453.7ad9fffd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.df2fc090.css",
-    "static/js/main.e3c699cc.js"
+    "static/js/main.4e3cae60.js"
   ]
 }
