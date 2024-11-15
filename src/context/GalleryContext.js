@@ -63,6 +63,8 @@ const GalleryProvider = ({ children }) => {
 
   // Função para buscar dados da API para a busca
   useEffect(() => {
+    if (!state.searchTerm) return;
+
     const fetchArtworks = async () => {
       dispatch({ type: actionTypes.SET_LOADING, payload: true });
       try {
@@ -79,16 +81,13 @@ const GalleryProvider = ({ children }) => {
       }
     };
   
-    if (state.searchTerm) {
-      fetchArtworks();
-    }
+    fetchArtworks();
   }, [state.searchTerm]);
 
-  // Função para buscar 20 obras de arte
+  // Função para buscar obras de arte para o Main.js
   useEffect(() => {
     const fetchLatestArtworks = async () => {
       try {
-        // Primeira chamada para obter os IDs
         const response = await axios.get(
           'https://collectionapi.metmuseum.org/public/collection/v1/search?q=*&hasImages=true'
         );
@@ -133,6 +132,7 @@ const GalleryProvider = ({ children }) => {
     fetchLatestArtworks();
   }, []);  
 
+  // Função para buscar todos os departamentos
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -180,6 +180,7 @@ const GalleryProvider = ({ children }) => {
     dispatch({ type: actionTypes.SET_SELECTED_DEPARTMENT, payload: { id: departmentId, name: departmentName } });
   };
 
+  // Função para retornar os dados de um objeto
   const getArtworkDetails = async (objectID) => {
     try {
       const response = await axios.get(
