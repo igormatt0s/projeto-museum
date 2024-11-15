@@ -22,7 +22,7 @@ function App() {
 
   return (
     <GalleryProvider>
-      <Router>
+      <Router basename="/projeto-museum">
         <div className="App d-flex flex-column min-vh-100">
           <Header />
           <div className="content-container">
