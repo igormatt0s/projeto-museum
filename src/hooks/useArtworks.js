@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const useArtworks = (artworks, initialPage = 1, artworksPerPage = 20) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [currentArtworks, setCurrentArtworks] = useState([]);
 
-  const fetchPageArtworks = async () => {
+  const fetchPageArtworks = useCallback(async () => {
     let validArtworks = [];
     let currentIndex = (currentPage - 1) * artworksPerPage;
   
@@ -36,11 +36,11 @@ const useArtworks = (artworks, initialPage = 1, artworksPerPage = 20) => {
     }
   
     setCurrentArtworks(validArtworks.slice(0, artworksPerPage));
-  };
+  }, [artworks, currentPage, artworksPerPage]);
 
   useEffect(() => {
     fetchPageArtworks();
-  }, [currentPage, artworks]);
+  }, [fetchPageArtworks]);
 
   const handleNextPage = () => {
     setCurrentPage(prev => prev + 1);

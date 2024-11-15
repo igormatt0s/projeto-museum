@@ -1,4 +1,3 @@
-// pages/DepartmentGallery/DepartmentGallery.js
 import React, { useContext } from 'react';
 import { GalleryContext } from '../../context/GalleryContext';
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';

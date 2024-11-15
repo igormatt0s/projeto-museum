@@ -1,31 +1,26 @@
 .details-container {
     background-color: #fff;
     min-height: 50vh;
-    flex-direction: row;
-    font-size: calc(10px + 2vmin);
-    width: 100%;
     color: #333333;
     margin: 50px 0;
     padding: 0 100px;
 }
 
-section {
+.detailsRow {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
     justify-content: space-between;
 }
 
 .detailsText {
-    width: 40%;
+    font-size: calc(10px + 2vmin);
 }
 
 .detailsImage {
-    width: 45%;
-    max-height: 90vh;
-    overflow: auto;
     display: flex;
     justify-content: center;
+    align-items: center;
+    max-height: 90vh;
+    overflow: auto;
 }
 
 .detailsImage img {

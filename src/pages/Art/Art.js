@@ -6,19 +6,19 @@ import useArtworks from '../../hooks/useArtworks';
 import './Art.css';
 
 const Art = () => {
-  const { artworks, isLoading } = useContext(GalleryContext);
-  const { currentPage, currentArtworks, handleNextPage, handlePreviousPage } = useArtworks(artworks);
+  const { artworksSearch, isLoading } = useContext(GalleryContext);
+  const { currentPage, currentArtworks, handleNextPage, handlePreviousPage } = useArtworks(artworksSearch);
 
   return (
     <Container className="art-container">
       <h1 className="my-4 text-center">Art Gallery</h1>
-      {isLoading ? (
-        <Alert variant="info" className="text-center" style={{backgroundColor: 'rgb(211, 253, 200)'}}>
-          Loading images...
-        </Alert>
-      ) : currentArtworks.length === 0 ? (
+      {currentArtworks.length === 0 ? (
         <Alert variant="info" className="text-center">
           No search has been conducted. Please perform a search to see the main artworks.
+        </Alert>
+      ) : isLoading ? (
+        <Alert variant="info" className="text-center" style={{backgroundColor: 'rgb(211, 253, 200)'}}>
+          Loading images...
         </Alert>
       ) : (
         <>
@@ -48,8 +48,8 @@ const Art = () => {
             <span className="page-indicator mx-3">Page {currentPage}</span>
             <Button
               onClick={handleNextPage}
-              className={`button-navigation ${currentPage < Math.ceil(artworks.length / 20) ? 'enabled' : 'disabled'}`}
-              disabled={currentPage === Math.ceil(artworks.length / 20)}
+              className={`button-navigation ${currentPage < Math.ceil(artworksSearch.length / 20) ? 'enabled' : 'disabled'}`}
+              disabled={currentPage === Math.ceil(artworksSearch.length / 20)}
             >
               Next
             </Button>

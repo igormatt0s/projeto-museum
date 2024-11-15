@@ -1,28 +1,28 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Alert } from 'react-bootstrap';
+import { Container, Alert, Row, Col } from 'react-bootstrap';
 import { GalleryContext } from '../../context/GalleryContext';
 import './ArtDetails.css';
 
 const ArtDetails = () => {
   const { objectID } = useParams();
-  const { getArtworkDetails, artworkDetails, isLoading } = useContext(GalleryContext);
+  const { getArtworkDetails, artworkDetails } = useContext(GalleryContext);
 
   useEffect(() => {
     getArtworkDetails(objectID);
   }, [objectID, getArtworkDetails]);
 
   return (
-    <div className="details-container">
+    <Container className="details-container">
       {
         !artworkDetails ? (
-          <Alert variant="info" className="text-center" style={{ backgroundColor: 'rgb(211, 253, 200)' }} >
+          <Alert variant="info" className="text-center" style={{ backgroundColor: 'rgb(211, 253, 200)' }}>
             Loading images...
-          </Alert >
+          </Alert>
         ) : (
           <>
-            <section>
-              <div className='detailsText'>
+            <Row className="detailsRow">
+              <Col xs={12} md={6} className="detailsText">
                 <div className='abstract'>
                   <h1>{artworkDetails.title}</h1>
                   <div className='artist'>
@@ -43,15 +43,14 @@ const ArtDetails = () => {
                   <span><strong>Classification:</strong> {artworkDetails.classification}</span>
                   <span><strong>Accession Year:</strong> {artworkDetails.accessionYear}</span>
                 </div>
-              </div>
-
-              <div className='detailsImage'>
+              </Col>
+              <Col xs={12} md={6} className="detailsImage">
                 <img src={artworkDetails.primaryImage} alt={artworkDetails.title} />
-              </div>
-            </section>
+              </Col>
+            </Row>
           </>
         )}
-    </div>
+    </Container>
   );
 };
 

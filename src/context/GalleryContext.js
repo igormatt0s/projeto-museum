@@ -6,6 +6,7 @@ export const GalleryContext = createContext();
 // Tipos de ação para o reducer
 const actionTypes = {
   SET_ARTWORKS: 'SET_ARTWORKS',
+  SET_ARTWORKS_SEARCH: 'SET_ARTWORKS_SEARCH',
   SET_SEARCH_TERM: 'SET_SEARCH_TERM',
   SET_LATEST_ARTWORKS: 'SET_LATEST_ARTWORKS',
   SET_DEPARTMENTS: 'SET_DEPARTMENTS',
@@ -19,6 +20,8 @@ const galleryReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.SET_ARTWORKS:
       return { ...state, artworks: action.payload };
+    case actionTypes.SET_ARTWORKS_SEARCH:
+      return { ...state, artworksSearch: action.payload };
     case actionTypes.SET_SEARCH_TERM:
       return { ...state, searchTerm: action.payload };
     case actionTypes.SET_LOADING:
@@ -45,6 +48,7 @@ const galleryReducer = (state, action) => {
 // Estado inicial
 const initialState = {
   artworks: [],
+  artworksSearch: [],
   searchTerm: '',
   latestArtworks: [],
   departments: [],
@@ -66,7 +70,7 @@ const GalleryProvider = ({ children }) => {
           `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${state.searchTerm}`
         );
         const objectIDs = response.data.objectIDs || [];
-        dispatch({ type: actionTypes.SET_ARTWORKS, payload: objectIDs });
+        dispatch({ type: actionTypes.SET_ARTWORKS_SEARCH, payload: objectIDs });
       } catch (error) {
         dispatch({ type: actionTypes.SET_ERROR, payload: 'Erro ao buscar dados.' });
         console.error('Erro ao buscar dados:', error);
@@ -176,10 +180,6 @@ const GalleryProvider = ({ children }) => {
     dispatch({ type: actionTypes.SET_SELECTED_DEPARTMENT, payload: { id: departmentId, name: departmentName } });
   };
 
-  const setPage = (pageNumber) => {
-    dispatch({ type: actionTypes.SET_PAGE, payload: pageNumber });
-  };
-
   const getArtworkDetails = async (objectID) => {
     try {
       const response = await axios.get(
@@ -195,6 +195,7 @@ const GalleryProvider = ({ children }) => {
     <GalleryContext.Provider
       value={{
         artworks: state.artworks,
+        artworksSearch: state.artworksSearch,
         searchTerm: state.searchTerm,
         latestArtworks: state.latestArtworks,
         departments: state.departments,
@@ -202,7 +203,6 @@ const GalleryProvider = ({ children }) => {
         artworkDetails: state.artworkDetails,
         isLoading: state.isLoading,
         error: state.error,
-        setPage,
         setSearchTerm,
         setSelectedDepartment,
         getArtworkDetails,
