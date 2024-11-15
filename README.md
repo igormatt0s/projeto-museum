@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Application deployed and available on the GithHub Pages web server
+
+Access link: [The Met Museum App](https://igormatt0s.github.io/projeto-museum/).
+
 ## Available Scripts
 
 In the project directory, you can run:
