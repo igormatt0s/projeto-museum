@@ -1,10 +1,12 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
+import api from '../services/api';
 
 export const GalleryContext = createContext();
 
 // Tipos de ação para o reducer
 const actionTypes = {
+  SET_USER: 'SET_USER',
   SET_ARTWORKS: 'SET_ARTWORKS',
   SET_ARTWORKS_SEARCH: 'SET_ARTWORKS_SEARCH',
   SET_SEARCH_TERM: 'SET_SEARCH_TERM',
@@ -18,6 +20,8 @@ const actionTypes = {
 // Função reducer para gerenciar o estado da galeria
 const galleryReducer = (state, action) => {
   switch (action.type) {
+    case actionTypes.SET_USER:
+      return { ...state, user: action.payload };
     case actionTypes.SET_ARTWORKS:
       return { ...state, artworks: action.payload };
     case actionTypes.SET_ARTWORKS_SEARCH:
@@ -47,6 +51,7 @@ const galleryReducer = (state, action) => {
 
 // Estado inicial
 const initialState = {
+  user: null,
   artworks: [],
   artworksSearch: [],
   searchTerm: '',
@@ -61,17 +66,32 @@ const initialState = {
 const GalleryProvider = ({ children }) => {
   const [state, dispatch] = useReducer(galleryReducer, initialState);
 
+  const setUser = (user) => {
+    dispatch({ type: actionTypes.SET_USER, payload: user });
+  };
+
+  // Verifica se o usuário está autenticado (sessão ativa)
+  const isAuthenticated = () => {
+    const token = localStorage.getItem('token');
+    return token !== null && token !== undefined;
+  };
+
   // Função para buscar dados da API para a busca
   useEffect(() => {
     if (!state.searchTerm) return;
-
+  
     const fetchArtworks = async () => {
+      if (!isAuthenticated()) {
+        throw new Error('Usuário não autenticado. Faça login para realizar buscas.');
+      }
       dispatch({ type: actionTypes.SET_LOADING, payload: true });
       try {
         const response = await axios.get(
           `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${state.searchTerm}`
         );
+        
         const objectIDs = response.data.objectIDs || [];
+  
         dispatch({ type: actionTypes.SET_ARTWORKS_SEARCH, payload: objectIDs });
       } catch (error) {
         dispatch({ type: actionTypes.SET_ERROR, payload: 'Erro ao buscar dados.' });
@@ -82,7 +102,7 @@ const GalleryProvider = ({ children }) => {
     };
   
     fetchArtworks();
-  }, [state.searchTerm]);
+  }, [state.searchTerm]);  
 
   // Função para buscar obras de arte para o Main.js
   useEffect(() => {
@@ -169,7 +189,24 @@ const GalleryProvider = ({ children }) => {
   
     fetchDepartmentArtworks();
   }, [state.selectedDepartment]);
-  
+
+  // Função para inserir uma nova obra com controle de sessão
+  const insertArtwork = async (artwork) => {
+    if (!isAuthenticated()) {
+      throw new Error('Usuário não autenticado. Faça login para inserir uma obra.');
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.post('/artworks/insert', artwork, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Obra inserida com sucesso:', response.data);
+    } catch (error) {
+      console.error('Erro ao inserir obra:', error);
+      dispatch({ type: actionTypes.SET_ERROR, payload: 'Erro ao inserir obra. Tente novamente.' });
+    }
+  };
 
   // Funções de ação para atualizar o estado
   const setSearchTerm = (term) => {
@@ -183,9 +220,25 @@ const GalleryProvider = ({ children }) => {
   // Função para retornar os dados de um objeto
   const getArtworkDetails = async (objectID) => {
     try {
-      const response = await axios.get(
-        `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`
-      );
+      const token = localStorage.getItem('token');
+      let response;
+      try {
+        // 1. Verificar se a obra está no banco de dados
+        response = await api.get(
+          `/artworks/artwork/${objectID}`, 
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          // 2. Se não estiver no banco, buscar na API do Met Museum
+          const apiResponse = await axios.get(
+            `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectID}`
+          );    
+          response = apiResponse;
+        } else {
+          throw new Error('Erro ao buscar a obra de arte no banco de dados.');
+        }
+      }
       dispatch({ type: actionTypes.SET_ARTWORK_DETAILS, payload: response.data });
     } catch (error) {
       console.error('Erro ao buscar detalhes da obra:', error);
@@ -195,6 +248,7 @@ const GalleryProvider = ({ children }) => {
   return (
     <GalleryContext.Provider
       value={{
+        ...state,
         artworks: state.artworks,
         artworksSearch: state.artworksSearch,
         searchTerm: state.searchTerm,
@@ -204,6 +258,8 @@ const GalleryProvider = ({ children }) => {
         artworkDetails: state.artworkDetails,
         isLoading: state.isLoading,
         error: state.error,
+        setUser,
+        insertArtwork,
         setSearchTerm,
         setSelectedDepartment,
         getArtworkDetails,

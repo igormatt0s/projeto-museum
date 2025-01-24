@@ -75,6 +75,11 @@
     border-color: #a6192e;
 }
 
+.logout-link:hover {
+    border-radius: 0;
+    border-bottom: 2px solid white;
+}
+  
 @media (max-width: 1000px) {
     .nav-container {
         margin: 0;
